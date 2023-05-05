@@ -2,6 +2,7 @@
 
 Grupo:
 Gabriel Batista -
+Gerson Neto -
 Lucas Pereira -
 Rafael Nóbrega -
 Wagner Moura
