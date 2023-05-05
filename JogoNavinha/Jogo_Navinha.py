@@ -20,8 +20,13 @@ clock = pygame.time.Clock() #Para definir o fps que o jogo vai rodar
 
 
 imagemdefundo = pygame.image.load('spacebggame.png')
+imagemdefundo = pygame.transform.rotate(imagemdefundo, 90)
+imagemdefundo = pygame.transform.scale(imagemdefundo, (resolucaoX, resolucaoY))
 navedojogador = pygame.image.load('sprite_nave_pequena.png')
 naveInimiga = pygame.image.load('nave_inimiga_pequena.png')
+
+score = 0
+font = pygame.font.SysFont("arial", 20, True, False) #Fonte do texto do jogo
 
 
 #Gerenciador de sprites
@@ -29,11 +34,13 @@ naveInimiga = pygame.image.load('nave_inimiga_pequena.png')
 centroJogadorX, centroJogadorY = navedojogador.get_width() / 2, navedojogador.get_height() / 2
 direitaJogador = navedojogador.get_width()
 baixoJogador = navedojogador.get_height()
+rectJogador = navedojogador.get_rect()
 
 #Inimigo
 centroInimigoX, centroInimigoY = naveInimiga.get_width() / 2, naveInimiga.get_height() / 2
 direitaInimigo = naveInimiga.get_width()
 baixoInimigo = naveInimiga.get_height()
+rectInimigo = naveInimiga.get_rect()
 
 
 #Nave do jogador
@@ -49,17 +56,22 @@ tiro = False
 
 #Nave do inimigo
 posicaoInimigo : list = []
+naves : list = []
 
 velocidadeNaveInimigo = 3
 
-nasceInimigoFrequencia = 15
+nasceInimigoFrequencia = 30
 nasceInimigo = 24
+podeNascerInimigo = False
 pygame.time.set_timer(nasceInimigo, nasceInimigoFrequencia, 0)
 
 
 while True:
     clock.tick(60) #Define o fps que o jogo vai rodar
     janela.fill((0, 0, 0))
+
+    mensagem : str = f"Pontos: {score}"
+    texto_formatado = font.render(mensagem, True, (255, 255, 255))
 
     for events in pygame.event.get(): #Para fechar o jogo
         if events.type == pygame.QUIT:
@@ -105,15 +117,24 @@ while True:
 
     #SPAWNER DE INIMIGOS
     if pygame.event.get(nasceInimigo): #Observa se o timer do nascimento dos inimigos já resetou
+        podeNascerInimigo = True
+
+    if podeNascerInimigo:
         posicaoInimigoX = randint(0, resolucaoX)
         posicaoInimigoY = 0 - centroInimigoY
         posicaoInimigo.append([posicaoInimigoX, posicaoInimigoY])
+        podeNascerInimigo = False
 
     #Movimento Inimigo
     for inimigo in posicaoInimigo: #Para cada posição de inimigo na lista ele desenha um inimigo na tela
         if inimigo[1] < resolucaoY:
             janela.blit(naveInimiga, (inimigo[0], inimigo[1]))
             inimigo[1] += velocidadeNaveInimigo
+            print(inimigo[1])
+            for bala in balas:
+                if bala[1] <= (inimigo[1] + baixoInimigo) and bala[1] >= (inimigo[1] - baixoInimigo) and bala[0] <= (inimigo[0] + direitaInimigo) and bala[0] >= (inimigo[0] - direitaInimigo):
+                    posicaoInimigo.pop(posicaoInimigo.index(inimigo))
+                    score += 1
         else:
             posicaoInimigo.pop(posicaoInimigo.index(inimigo))
 
@@ -123,9 +144,6 @@ while True:
         if bala[1] >= 0: #Confere se o valor de "y" da bala ainda está dentro da janela
             tiro = pygame.draw.circle(janela, (0, 255, 0), (bala[0], bala[1]), 10)
             bala[1] -= velBala
-            for inimigo in posicaoInimigo:
-                if tiro[0] == inimigo[0] and tiro[1] == inimigo[1]:
-                    balas.pop(balas.index(bala))
         else: #Se o valor de "y" excedeu a janela ele deleta o elemento da lista de acordo com seu índice
             balas.pop(balas.index(bala))
         
@@ -133,6 +151,6 @@ while True:
     
 
 
-
+    janela.blit(texto_formatado, (10, 40))
     pygame.display.update()
     
