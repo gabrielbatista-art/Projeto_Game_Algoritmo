@@ -1,6 +1,7 @@
 import sys,pygame #Importa os módulos referentes ao sistema do computador e pygame
 from Jogador import Jogador as player #Importa o jogador como player
 from Inimigo import Inimigo as enemy #Importa o inimigo como enemy
+from Tiro import Tiro
 
 pygame.init() #Inicializa os módulos do pygame
 
@@ -28,6 +29,9 @@ velocidadePlayer = 10
 naveInimigo1 = pygame.image.load("JogoNavinha/Sprites/nave_inimiga_pequena.png") #Sprite Inimigo
 velocidadeInimigo = 5
 
+#Tiro
+tiroSprite = pygame.image.load("JogoNavinha/Sprites/missil_pequeno.png")
+velocidadeTiro = 10
 
 #INSTANCIAR ENTIDADES ------------------------------------------------------------------
 todasSprites = pygame.sprite.Group() #Inicia o grupo onde vão todas as sprites
@@ -36,6 +40,9 @@ inimigos = pygame.sprite.Group() #Inicia o grupo para armazenar inimigos
 #JOGADOR
 jogador = player(naveJogador, velocidade = velocidadePlayer, vida = 3, tela = (larguraTela, alturaTela)) #Instancia o jogador
 todasSprites.add(jogador) #Adiciona o jogador as grupo de todas as sprites
+
+laser = Tiro(tiroSprite, velocidadeTiro, 10, (larguraTela, alturaTela))
+todasSprites.add(laser)
 
 #INIMIGOS
 for c in range(5):
