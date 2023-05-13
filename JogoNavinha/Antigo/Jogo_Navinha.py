@@ -22,8 +22,17 @@ clock = pygame.time.Clock() #Para definir o fps que o jogo vai rodar
 imagemdefundo = pygame.image.load('spacebggame.png')
 imagemdefundo = pygame.transform.rotate(imagemdefundo, 90)
 imagemdefundo = pygame.transform.scale(imagemdefundo, (resolucaoX, resolucaoY))
+
 navedojogador = pygame.image.load('sprite_nave_pequena.png')
+rectJogador = navedojogador.get_rect()
+
 naveInimiga = pygame.image.load('nave_inimiga_pequena.png')
+rectInimigo = naveInimiga.get_rect()
+
+#Grupos
+# player = pygame.sprite.Group()
+# player.add(rectJogador)
+
 
 score = 0
 font = pygame.font.SysFont("arial", 20, True, False) #Fonte do texto do jogo
