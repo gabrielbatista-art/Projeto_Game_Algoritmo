@@ -6,7 +6,7 @@ pygame.init() #Inicializa os módulos do pygame
 
 #VARIÁVEIS GERAIS ---------------------------------------------------------------------
 #Tela
-larguraTela, alturaTela = 480, 640 #Define a resolução do jogo
+larguraTela, alturaTela = 480, 720 #Define a resolução do jogo
 tela = pygame.display.set_mode((larguraTela, alturaTela)) #Define a janela onde o jogo irá rodar.
 pygame.display.set_caption("Python space shooter") #Define o título da janela.
 
@@ -34,7 +34,7 @@ todasSprites = pygame.sprite.Group() #Inicia o grupo onde vão todas as sprites
 inimigos = pygame.sprite.Group() #Inicia o grupo para armazenar inimigos
 
 #JOGADOR
-jogador = player(naveJogador, velocidade = velocidadePlayer, tela = (larguraTela, alturaTela)) #Instancia o jogador
+jogador = player(naveJogador, velocidade = velocidadePlayer, vida = 3, tela = (larguraTela, alturaTela)) #Instancia o jogador
 todasSprites.add(jogador) #Adiciona o jogador as grupo de todas as sprites
 
 #INIMIGOS
@@ -64,6 +64,5 @@ while True:
     tela.blit(imagemFundo, (0,0))
     todasSprites.draw(tela) #Esse método desenha todas as sprites dentro do grupo "todasSprites" na tela
 
-    velocidadeInimigo *= 1.9
 
     pygame.display.update() #Atualiza a tela do pygame

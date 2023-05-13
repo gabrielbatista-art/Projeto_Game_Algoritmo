@@ -1,16 +1,16 @@
 import pygame
 
 class Jogador(pygame.sprite.Sprite): #Cria a classe jogador e suas particularidades e métodos
-    def __init__(self, naveJogadorSprite, velocidade : int, tela : tuple):
+    def __init__(self, naveJogadorSprite, velocidade : int, vida : int, tela : tuple):
         pygame.sprite.Sprite.__init__(self)
         self.image = naveJogadorSprite
         self.rect = self.image.get_rect() #Pega o retangulo para conferir colisão baseado no tamanho da imagem
         self.tela = (tela[0], tela[1])
         self.velocidade = velocidade
+        self.vida = vida
 
     def update(self):
-        pygame.draw.rect(self.image, (255, 0, 0), self.rect, 1)
-
+        # pygame.draw.rect(self.image, (255, 0, 0), self.rect, 1)
 
         tecla = pygame.key.get_pressed() #Observa as teclas que são apertadas a cada frame
         #Move a nave no eixo X
