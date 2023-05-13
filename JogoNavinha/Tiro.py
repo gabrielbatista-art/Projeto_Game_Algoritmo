@@ -10,4 +10,4 @@ class Tiro(pygame.sprite.Sprite):
         self.tela = (tela[0], tela[1])
     
     def update(self):
-        self.rect.y += self.velocidade
+        self.rect.y -= self.velocidade

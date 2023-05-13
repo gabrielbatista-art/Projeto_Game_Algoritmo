@@ -1,4 +1,5 @@
 import pygame
+from Tiro import Tiro
 
 class Jogador(pygame.sprite.Sprite): #Cria a classe jogador e suas particularidades e métodos
     def __init__(self, naveJogadorSprite, velocidade : int, vida : int, tela : tuple):
@@ -34,3 +35,4 @@ class Jogador(pygame.sprite.Sprite): #Cria a classe jogador e suas particularida
             self.rect.top = 0
         elif self.rect.bottom > self.tela[1]:
             self.rect.bottom = self.tela[1]
+            
