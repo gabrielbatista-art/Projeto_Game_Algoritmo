@@ -18,20 +18,22 @@ fps = 60 #Define a quantidade de quadros por segundo que o jogo roda
 
 #ENTIDADES ----------------------------------------------------------------------------
 #Fundo
-imagemFundo = pygame.image.load("JogoNavinha/Sprites/Fundo.png")
+imagemFundo = pygame.image.load("Sprites/Fundo.png")
 imagemFundo = pygame.transform.scale(imagemFundo, (larguraTela, alturaTela)) #Ajusta a imagem de fundo para o tamanho da tela
 
 #Player
-naveJogador = pygame.image.load("JogoNavinha/Sprites/Player.png") #Sprite player
+naveJogador = pygame.image.load("Sprites/Player.png") #Sprite player
 velocidadePlayer = 10
 
 #Inimigos
-naveInimigo1 = pygame.image.load("JogoNavinha/Sprites/Inimigo_Olhao.png") #Sprite Inimigo
+naveInimigo1 = pygame.image.load("Sprites/Inimigo_Olhao.png") #Sprite Inimigo
 velocidadeInimigo = 5
 
 #Tiro
-tiroSprite = pygame.image.load("JogoNavinha/Sprites/Tiro.png")
+tiroSprite = pygame.image.load("Sprites/Tiro.png")
 velocidadeTiro = 10
+
+fogo = pygame.image.load("Sprites/turbina.gif")
 
 #INSTANCIAR ENTIDADES ------------------------------------------------------------------
 todasSprites = pygame.sprite.Group() #Inicia o grupo onde vão todas as sprites
@@ -82,6 +84,7 @@ while True:
         todasSprites.remove(colisao)
 
     tela.blit(imagemFundo, (0,0))
+    tela.blit(fogo, (posicaoxdoplayer, posicaoydoplayer))
     todasSprites.draw(tela) #Esse método desenha todas as sprites dentro do grupo "todasSprites" na tela
 
 
