@@ -12,5 +12,4 @@ class Inimigo(pygame.sprite.Sprite):
         self.velocidade = randint(1, velocidade)
 
     def update(self):
-        # self.rect.y += self.velocidade #A nave só se move p baixo
-        pass
+        self.rect.y += self.velocidade #A nave só se move p baixo

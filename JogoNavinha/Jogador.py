@@ -6,6 +6,8 @@ class Jogador(pygame.sprite.Sprite): #Cria a classe jogador e suas particularida
         pygame.sprite.Sprite.__init__(self)
         self.image = naveJogadorSprite
         self.rect = self.image.get_rect() #Pega o retangulo para conferir colisão baseado no tamanho da imagem
+        self.rect.centerx = tela[0] / 2 #Faz o player iniciar no centro do eixo x da tela
+        self.rect.bottom = tela[1] #Faz o player iniciar na parte de baixo da tela
         self.tela = (tela[0], tela[1])
         self.velocidade = velocidade
         self.vida = vida
