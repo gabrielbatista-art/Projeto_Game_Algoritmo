@@ -3,7 +3,8 @@ import utilitarios
 from Jogador import Jogador as player #Importa o jogador como player
 from Inimigo import Inimigo as enemy #Importa o inimigo como enemy
 from Tiro import Tiro
-# from Gameover import game_over_screen
+
+
 
 pygame.init() #Inicializa os módulos do pygame
 
@@ -24,7 +25,9 @@ imagemFundo = pygame.image.load("Sprites/Fundo.png")
 imagemFundo = pygame.transform.scale(imagemFundo, (larguraTela, alturaTela)) #Ajusta a imagem de fundo para o tamanho da tela
 
 #Player
+
 naveJogador = pygame.image.load("Sprites/Player/player1.png") #Sprite player
+
 velocidadePlayer = 10
 
 #Inimigos
@@ -33,8 +36,10 @@ velocidadeInimigo = 5
 
 #Tiro
 tiroSprite = pygame.image.load("Sprites/Tiro.png")
+
 ultimoTiro = pygame.time.get_ticks() #Essa variável guarda o momento em que o ultimo tiro foi lançado
 cadencia = 500 #É a cadência de tiro em milissegundos
+
 velocidadeTiro = 10
 
 fogo = pygame.image.load("Sprites/turbina.gif")
@@ -69,6 +74,7 @@ while True:
 
     todasSprites.update() #Esse método atualiza todos os objetos dentro do grupo
 
+
     #Verifica o momento em que o tiro foi lançado
     tiroMomento = pygame.time.get_ticks()
 
@@ -81,6 +87,7 @@ while True:
         lasers.add(laser)
         ultimoTiro = tiroMomento
 
+
     colisaoTiro = pygame.sprite.groupcollide(inimigos, lasers, False, False)
     if colisaoTiro:
         inimigos.remove(colisaoTiro)
@@ -92,7 +99,9 @@ while True:
         todasSprites.remove(colisao)
 
     tela.blit(imagemFundo, (0,0))
+
     # tela.blit(fogo, (jogador.rect.x + 55, jogador.rect.y + 118))
+
     todasSprites.draw(tela) #Esse método desenha todas as sprites dentro do grupo "todasSprites" na tela
 
 
