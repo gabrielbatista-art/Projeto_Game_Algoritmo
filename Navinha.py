@@ -1,9 +1,10 @@
 import sys,pygame #Importa os módulos referentes ao sistema do computador e pygame
+from random import randint
 import utilitarios
 from Jogador import Jogador as player #Importa o jogador como player
 from Inimigo import Inimigo as enemy #Importa o inimigo como enemy
 from Tiro import Tiro
-# from Gameover import game_over_screen
+from StartGame import start_screen
 
 pygame.init() #Inicializa os módulos do pygame
 
@@ -28,7 +29,8 @@ naveJogador = pygame.image.load("Sprites/Player/player1.png") #Sprite player
 velocidadePlayer = 10
 
 #Inimigos
-naveInimigo1 = pygame.image.load("Sprites/Inimigo_Olhao.png") #Sprite Inimigo
+navesInimigos = ["Sprites/Inimigo_Olhao.png", "Sprites/Inimigo_Caveirinha.png"]
+naveInimigo1 = pygame.image.load(navesInimigos[randint(0, 1)]) #Sprite Inimigo
 velocidadeInimigo = 5
 
 #Tiro
@@ -52,11 +54,12 @@ todasSprites.add(jogador) #Adiciona o jogador as grupo de todas as sprites
 
 #INIMIGOS
 for c in range(5):
+    naveInimigo1 = pygame.image.load(navesInimigos[randint(0, 1)]) #Sprite Inimigo
     inimigo = enemy(naveInimigo1, velocidade = velocidadeInimigo, tela = (larguraTela, alturaTela)) #Instancia o inimigo, a gente coloca um for pra instanciar vários dps
     todasSprites.add(inimigo) #Adiciona o inimigo ao grupo de todas as sprites
     inimigos.add(inimigo) #Adiciona o inimigo ao grupo dos inimigos p conferir a colisão c o player depois
 
-# game_over_screen(imagemFundo, tela)
+start_screen(imagemFundo, tela)
 
 while True:
     Clock.tick(fps) #Define a quantidade de quadros em que o jogo roda
@@ -67,6 +70,7 @@ while True:
             pygame.quit()
             sys.exit()
 
+    todasSprites.draw(tela)
     todasSprites.update() #Esse método atualiza todos os objetos dentro do grupo
 
     #Verifica o momento em que o tiro foi lançado
