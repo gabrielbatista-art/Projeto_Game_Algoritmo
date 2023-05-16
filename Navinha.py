@@ -18,6 +18,8 @@ pygame.display.set_caption(utilitarios.tituloGame) #Define o título da janela.
 Clock = pygame.time.Clock()
 fps = 60 #Define a quantidade de quadros por segundo que o jogo roda
 
+pontos : int = 0
+
 
 #ENTIDADES ----------------------------------------------------------------------------
 #Fundo
@@ -36,8 +38,8 @@ velocidadeInimigo = 5
 #Tiro
 tiroSprite = pygame.image.load("Sprites/Tiro.png")
 ultimoTiro = pygame.time.get_ticks() #Essa variável guarda o momento em que o ultimo tiro foi lançado
-cadencia = 500 #É a cadência de tiro em milissegundos
-velocidadeTiro = 10
+cadencia = 200 #É a cadência de tiro em milissegundos
+velocidadeTiro = 15
 
 fogo = pygame.image.load("Sprites/turbina.gif")
 
@@ -67,6 +69,7 @@ while True:
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
+            print(pontos)
             pygame.quit()
             sys.exit()
 
@@ -86,9 +89,14 @@ while True:
         ultimoTiro = tiroMomento
 
     colisaoTiro = pygame.sprite.groupcollide(inimigos, lasers, False, False)
+    colisaoLaser = pygame.sprite.groupcollide(lasers, inimigos, False, False)
     if colisaoTiro:
+        if colisaoLaser:
+            lasers.remove(colisaoLaser)
+            todasSprites.remove(colisaoLaser)
         inimigos.remove(colisaoTiro)
         todasSprites.remove(colisaoTiro)
+        pontos += 1
 
     colisao = pygame.sprite.spritecollide(jogador, inimigos, False) #Confere se há colisão entre o player e os inimigos e retorna True ou False
     if colisao: #Se retornar true o jogo breka
@@ -98,6 +106,5 @@ while True:
     tela.blit(imagemFundo, (0,0))
     # tela.blit(fogo, (jogador.rect.x + 55, jogador.rect.y + 118))
     todasSprites.draw(tela) #Esse método desenha todas as sprites dentro do grupo "todasSprites" na tela
-
 
     pygame.display.update() #Atualiza a tela do pygame
