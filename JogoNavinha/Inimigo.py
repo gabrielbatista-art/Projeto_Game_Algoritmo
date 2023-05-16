@@ -13,3 +13,15 @@ class Inimigo(pygame.sprite.Sprite):
 
     def update(self):
         self.rect.y += self.velocidade #A nave só se move p baixo
+
+        #Mantém a nave dentro da tela no eixo X
+        if self.rect.left < 0:
+            self.rect.left = 0
+        elif self.rect.right > self.tela[0]:
+            self.rect.right = self.tela[0]
+        #Mantém a nave dentro da tela no eixo Y
+        # if self.rect.top < 0:
+        #     self.rect.top = 0
+        # elif self.rect.bottom > self.tela[1] + 50:
+        #     self.rect.bottom = self.tela[1] + 50
+       
