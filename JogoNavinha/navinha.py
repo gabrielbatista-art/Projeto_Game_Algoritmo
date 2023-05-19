@@ -5,6 +5,7 @@ from Jogador import Jogador as player #Importa o jogador como player
 from Inimigo import Inimigo as enemy #Importa o inimigo como enemy
 from Tiro import Tiro
 from StartGame import start_screen
+from defscore import desenhar_pontos
 
 pygame.init() #Inicializa os módulos do pygame
 
@@ -106,5 +107,6 @@ while True:
     tela.blit(imagemFundo, (0,0))
     # tela.blit(fogo, (jogador.rect.x + 55, jogador.rect.y + 118))
     todasSprites.draw(tela) #Esse método desenha todas as sprites dentro do grupo "todasSprites" na tela
+
 
     pygame.display.update() #Atualiza a tela do pygame
