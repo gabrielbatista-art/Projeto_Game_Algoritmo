@@ -9,14 +9,27 @@ def game_over_screen(fundo):
     #Tela
     larguraTela, alturaTela = utilitarios.resolucaoX, utilitarios.resolucaoY #Define a resolução do jogo
     tela = pygame.display.set_mode((larguraTela, alturaTela)) #Define a janela onde o jogo irá rodar.
+    telaRect = tela.get_rect()
     pygame.display.set_caption(utilitarios.tituloGame) #Define o título da janela.
 
     imagemFundo = pygame.image.load(fundo)
 
 
     while True:
-        titulo = "NAVINHA"
+        titulo = "GAME OVER"
+        restart = "<ENTER> para reiniciar"
+        sair = "<X> para sair"
+
         tituloExibir = font.render(titulo, True, (255, 255, 255))
+        rectTitulo = tituloExibir.get_rect()
+
+        restartExibir = font.render(restart, True, (255, 255, 255))
+        rectRestart = restartExibir.get_rect()
+
+
+        sairExibir = font.render(sair, True, (255, 255, 255))
+        rectExibir = sairExibir.get_rect()
+
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -24,18 +37,19 @@ def game_over_screen(fundo):
                 sys.exit()
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_RETURN:
-                    return
+                    return True
                 if event.key == pygame.K_x:
-                    return False
+                    pygame.quit()
+                    sys.exit()
                 if event.key == pygame.K_ESCAPE:
                     pygame.quit()
                     sys.exit()
 
         tela.fill((0, 0, 0))
         tela.blit(imagemFundo, (0,0))
-        tela.blit(tituloExibir, (20, 20))
-        # draw_text("Game Over", font_big, red, screen, screen_width//2, screen_height//4)
-        # draw_text("Sua pontuação: " + str(score), font, white, screen, screen_width//2, screen_height//2)
-        # draw_text("Pressione Enter para jogar novamente", font, white, screen, screen_width//2, screen_height*3//4)
-        # draw_text("Pressione ESC para sair do jogo", font, white, screen, screen_width//2, screen_height*3//4 + 40)
+        tela.blit(tituloExibir, (telaRect.centerx - rectTitulo.centerx, telaRect.centery - rectTitulo.centery))
+        tela.blit(restartExibir, (telaRect.centerx - rectRestart.centerx, telaRect.bottom - (rectRestart.bottom * 4)))
+        tela.blit(sairExibir, (telaRect.centerx - rectExibir.centerx, telaRect.bottom - (rectExibir.bottom * 2)))
         pygame.display.flip()
+
+        

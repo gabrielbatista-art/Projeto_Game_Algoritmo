@@ -110,6 +110,7 @@ def jogoNavinha():
         tela.blit(imagemFundo, (0,0))
         # tela.blit(fogo, (jogador.rect.x + 55, jogador.rect.y + 118))
         todasSprites.draw(tela) #Esse método desenha todas as sprites dentro do grupo "todasSprites" na tela
+        desenhar_pontos(pontos, tela)
 
 
         pygame.display.update() #Atualiza a tela do pygame

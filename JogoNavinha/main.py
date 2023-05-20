@@ -21,7 +21,4 @@ pontos : int = 0
 while True:
     menu.start_screen(utilitarios.background)
     jogoNavinha.jogoNavinha()
-    gameover = gameover.game_over_screen(utilitarios.background)
-
-    if gameover == False:
-        break
+    gameover.game_over_screen(utilitarios.background)
