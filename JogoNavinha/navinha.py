@@ -55,8 +55,8 @@ def jogoNavinha():
     jogador = player(naveJogador, velocidade = velocidadePlayer, vida = 3, tela = (larguraTela, alturaTela)) #Instancia o jogador
     todasSprites.add(jogador) #Adiciona o jogador as grupo de todas as sprites
 
-
     baternoplayer = 3
+
     #INIMIGOS
     for c in range(5):
         naveInimigo1 = pygame.image.load(navesInimigos[randint(0, 1)]) #Sprite Inimigo
@@ -110,7 +110,6 @@ def jogoNavinha():
             baternoplayer -= 1
             if baternoplayer == 0:
                return
-
 
         tela.blit(imagemFundo, (0,0))
         # tela.blit(fogo, (jogador.rect.x + 55, jogador.rect.y + 118))
