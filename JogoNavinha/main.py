@@ -19,6 +19,6 @@ fps = 60 #Define a quantidade de quadros por segundo que o jogo roda
 pontos : int = 0
 
 while True:
-    menu.start_screen(utilitarios.background)
+    menu.start_screen(utilitarios.fundoMenu, utilitarios.logoMenu, utilitarios.startMenu)
     jogoNavinha.jogoNavinha()
     gameover.game_over_screen(utilitarios.background)
