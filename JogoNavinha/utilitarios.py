@@ -9,3 +9,4 @@ background = "Sprites/Fundo.png"
 fundoMenu = "Sprites/Menu/fundo_menu.png"
 startMenu = "Sprites/Menu/start_menu.png"
 logoMenu = "Sprites/Menu/logo_menu.png"
+
