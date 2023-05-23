@@ -1,6 +1,6 @@
 import pygame, sys
 import utilitarios
-import Navinha as jogoNavinha
+import navinha as jogoNavinha
 import StartGame as menu
 import Gameover as gameover
 
@@ -19,6 +19,6 @@ fps = 60 #Define a quantidade de quadros por segundo que o jogo roda
 pontos : int = 0
 
 while True:
-    menu.start_screen(utilitarios.fundoMenu, utilitarios.logoMenu, utilitarios.startMenu)
+    menu.start_screen(utilitarios.fundoMenu, utilitarios.logoMenu, (utilitarios.startMenu, utilitarios.startMenu2))
     jogoNavinha.jogoNavinha()
     gameover.game_over_screen(utilitarios.background)

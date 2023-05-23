@@ -96,12 +96,13 @@ def jogoNavinha():
         colisaoTiro = pygame.sprite.groupcollide(inimigos, lasers, False, False)
         colisaoLaser = pygame.sprite.groupcollide(lasers, inimigos, False, False)
         if colisaoTiro:
-            if colisaoLaser:
-                lasers.remove(colisaoLaser)
-                todasSprites.remove(colisaoLaser)
-            inimigos.remove(colisaoTiro)
-            todasSprites.remove(colisaoTiro)
-            pontos += 1
+            for colisao in colisaoTiro:
+                if colisaoLaser:
+                    lasers.remove(colisaoLaser)
+                    todasSprites.remove(colisaoLaser)
+                inimigos.remove(colisaoTiro)
+                todasSprites.remove(colisaoTiro)
+                pontos += 1
 
         colisao = pygame.sprite.spritecollide(jogador, inimigos, False) #Confere se há colisão entre o player e os inimigos e retorna True ou False
         if colisao: #Se retornar true o jogo breka
