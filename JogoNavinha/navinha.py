@@ -6,7 +6,6 @@ from Inimigo import Inimigo as enemy #Importa o inimigo como enemy
 from Tiro import Tiro
 # from StartGame import start_screen
 from defscore import desenhar_pontos
-import Gameover as gameover
 
 def jogoNavinha():
     pygame.init() #Inicializa os módulos do pygame
@@ -54,9 +53,7 @@ def jogoNavinha():
     #JOGADOR
     jogador = player(naveJogador, velocidade = velocidadePlayer, vida = 3, tela = (larguraTela, alturaTela)) #Instancia o jogador
     todasSprites.add(jogador) #Adiciona o jogador as grupo de todas as sprites
-
-    baternoplayer = 3
-
+    
     #INIMIGOS
     for c in range(5):
         naveInimigo1 = pygame.image.load(navesInimigos[randint(0, 1)]) #Sprite Inimigo
@@ -107,9 +104,6 @@ def jogoNavinha():
         if colisao: #Se retornar true o jogo breka
             inimigos.remove(colisao)
             todasSprites.remove(colisao)
-            baternoplayer -= 1
-            if baternoplayer == 0:
-               return
 
         tela.blit(imagemFundo, (0,0))
         # tela.blit(fogo, (jogador.rect.x + 55, jogador.rect.y + 118))

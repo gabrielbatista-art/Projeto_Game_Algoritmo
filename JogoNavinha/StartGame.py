@@ -11,10 +11,20 @@ def start_screen(fundo, logo, start):
 
     imagemFundo = pygame.image.load(fundo)
     fundoRect = imagemFundo.get_rect()
+
     imagemLogo = pygame.image.load(logo)
     rectLogo = imagemLogo.get_rect()
-    imagemStart = pygame.image.load(start)
+
+    startImages = [start[0], start[1]]
+
+    imagemStart = pygame.image.load(startImages[0])
     rectStart = imagemStart.get_rect()
+    rectStart.x = fundoRect.centerx - rectStart.centerx
+    rectStart.y = fundoRect.bottom - rectLogo.bottom * 0.87
+
+
+    imagemStart2 = pygame.image.load(startImages[1])
+    rectStart2 = imagemStart2.get_rect()
    
     
     font = pygame.font.SysFont("arial", 40, True, False)
@@ -22,8 +32,8 @@ def start_screen(fundo, logo, start):
     # start_text = font.render("ENTER para iniciar", True, (255, 255, 255))
 
     #CURSOR DO MOUSE --------------------
-    imagem_cursor = pygame.image.load("Sprites/Menu/cursor_navinha_export.png")
     pygame.mouse.set_visible(False)
+    imagem_cursor = pygame.image.load("Sprites/Menu/cursor_navinha_export.png")
     imagem_cursor_rect = imagem_cursor.get_rect()
 
 
@@ -35,8 +45,11 @@ def start_screen(fundo, logo, start):
 
     while True:
 
-        imagem_cursor_rect = imagem_cursor.get_rect() #retangulo do mouse
-        imagem_mouse = pygame.mouse.get_pos()  # update position
+        pos_mouse = pygame.mouse.get_pos()  # update position
+        # print(imagem_cursor_rect)
+
+        imagem_cursor_rect.x = pos_mouse[0]
+        imagem_cursor_rect.y = pos_mouse[1]
 
         # if rectStart.colliderect(imagem_cursor_rect, rectStart):
         #     tela.blit(utilitarios.startMenu, rectStart)
@@ -60,15 +73,20 @@ def start_screen(fundo, logo, start):
             #else:
             #    tela.blit(start_bottom_select,rectStart)
         
-    
-         
-            
         
         tela.fill((0, 0, 0))
         tela.blit(imagemFundo, (0, 0))
         tela.blit(imagemLogo, (fundoRect.centerx - rectLogo.centerx, fundoRect.centery - rectLogo.bottom * 1.3))
-        tela.blit(imagemStart, (fundoRect.centerx - rectStart.centerx, fundoRect.bottom - rectLogo.bottom * 0.87))
-        tela.blit(imagem_cursor, imagem_mouse) # draw the cursor
+        
+        colisMenu = pygame.Rect.colliderect(imagem_cursor_rect, rectStart)
+        if colisMenu:
+            tela.blit(imagemStart2, (rectStart.x, rectStart.y))
+        else:
+            tela.blit(imagemStart, (rectStart.x, rectStart.y))
+
+        tela.blit(imagem_cursor, pos_mouse) # draw the cursor
+        pygame.draw.rect(tela, (255, 0, 0), (10, 10, 10, 10))
+
        
         # tela.blit(game_over_text, (tela.get_width() // 2 - game_over_text.get_width() // 2,
         #                               tela.get_height() // 4 - game_over_text.get_height() // 2))
@@ -76,4 +94,3 @@ def start_screen(fundo, logo, start):
         #                         tela.get_height() * 3 // 4 + 40 - start_text.get_height() // 2))
 
         pygame.display.flip()
-
