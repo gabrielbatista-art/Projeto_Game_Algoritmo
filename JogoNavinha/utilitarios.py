@@ -11,3 +11,5 @@ startMenu = "Sprites/Menu/start_menu.png"
 startMenu2 = "Sprites/Menu/start_menu_2.png"
 logoMenu = "Sprites/Menu/logo_menu.png"
 
+fonte = "8bit.ttf"
+

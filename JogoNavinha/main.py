@@ -1,6 +1,6 @@
 import pygame, sys
 import utilitarios
-import Navinha as jogoNavinha
+import navinha as jogoNavinha
 import StartGame as menu
 import Gameover as gameover
 

@@ -57,7 +57,7 @@ def jogoNavinha():
     #INIMIGOS
     for c in range(5):
         naveInimigo1 = pygame.image.load(navesInimigos[randint(0, 1)]) #Sprite Inimigo
-        inimigo = enemy(naveInimigo1, velocidade = velocidadeInimigo, tela = (larguraTela, alturaTela)) #Instancia o inimigo, a gente coloca um for pra instanciar vários dps
+        inimigo = enemy(naveInimigo1, velocidade = velocidadeInimigo, tela = (larguraTela, alturaTela), movimento = randint(0, 1)) #Instancia o inimigo, a gente coloca um for pra instanciar vários dps
         todasSprites.add(inimigo) #Adiciona o inimigo ao grupo de todas as sprites
         inimigos.add(inimigo) #Adiciona o inimigo ao grupo dos inimigos p conferir a colisão c o player depois
 
@@ -93,12 +93,13 @@ def jogoNavinha():
         colisaoTiro = pygame.sprite.groupcollide(inimigos, lasers, False, False)
         colisaoLaser = pygame.sprite.groupcollide(lasers, inimigos, False, False)
         if colisaoTiro:
-            if colisaoLaser:
-                lasers.remove(colisaoLaser)
-                todasSprites.remove(colisaoLaser)
-            inimigos.remove(colisaoTiro)
-            todasSprites.remove(colisaoTiro)
-            pontos += 1
+            for colisao in colisaoTiro:
+                if colisaoLaser:
+                    lasers.remove(colisaoLaser)
+                    todasSprites.remove(colisaoLaser)
+                inimigos.remove(colisaoTiro)
+                todasSprites.remove(colisaoTiro)
+                pontos += 1
 
         colisao = pygame.sprite.spritecollide(jogador, inimigos, False) #Confere se há colisão entre o player e os inimigos e retorna True ou False
         if colisao: #Se retornar true o jogo breka

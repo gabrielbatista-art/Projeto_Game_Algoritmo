@@ -2,7 +2,7 @@
 import pygame, sys
 import utilitarios
 
-def start_screen(fundo, logo, start):
+def start_screen(fundo, logo, start : tuple):
     pygame.init()
 
     larguraTela, alturaTela = utilitarios.resolucaoX, utilitarios.resolucaoY #Define a resolução do jogo
@@ -15,16 +15,11 @@ def start_screen(fundo, logo, start):
     imagemLogo = pygame.image.load(logo)
     rectLogo = imagemLogo.get_rect()
 
-    startImages = [start[0], start[1]]
-
-    imagemStart = pygame.image.load(startImages[0])
+    imagemStart = pygame.image.load(start[0])
+    imagemStart2 = pygame.image.load(start[1])
     rectStart = imagemStart.get_rect()
     rectStart.x = fundoRect.centerx - rectStart.centerx
     rectStart.y = fundoRect.bottom - rectLogo.bottom * 0.87
-
-
-    imagemStart2 = pygame.image.load(startImages[1])
-    rectStart2 = imagemStart2.get_rect()
    
     
     font = pygame.font.SysFont("arial", 40, True, False)
@@ -45,16 +40,18 @@ def start_screen(fundo, logo, start):
 
     while True:
 
-        pos_mouse = pygame.mouse.get_pos()  # update position
-        # print(imagem_cursor_rect)
+        imagem_cursor_rect = imagem_cursor.get_rect() #retangulo do mouse
+        posicao_mouse = pygame.mouse.get_pos()  # update position
 
-        imagem_cursor_rect.x = pos_mouse[0]
-        imagem_cursor_rect.y = pos_mouse[1]
+
+        imagem_cursor_rect.x = posicao_mouse[0]
+        imagem_cursor_rect.y = posicao_mouse[1]
 
         # if rectStart.colliderect(imagem_cursor_rect, rectStart):
         #     tela.blit(utilitarios.startMenu, rectStart)
         # else: 
         #     tela.blit(utilitarios.startMenu2, rectStart)
+        colisaoStart = pygame.Rect.colliderect(imagem_cursor_rect, rectStart)
             
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -67,6 +64,9 @@ def start_screen(fundo, logo, start):
                     pygame.quit()
                     sys.exit()
             
+        if pygame.mouse.get_pressed()[0] and colisaoStart:
+            break
+        
             #Verificando se o loop do mouse está colidindo com o start
             #if imagemStart.collidepoint(pygame.mouse.get.pos()):
             #    tela.blit(start_bottom_normal, rectStart)
@@ -84,7 +84,7 @@ def start_screen(fundo, logo, start):
         else:
             tela.blit(imagemStart, (rectStart.x, rectStart.y))
 
-        tela.blit(imagem_cursor, pos_mouse) # draw the cursor
+        tela.blit(imagem_cursor, posicao_mouse) # draw the cursor
         pygame.draw.rect(tela, (255, 0, 0), (10, 10, 10, 10))
 
        
