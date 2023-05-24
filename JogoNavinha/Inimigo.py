@@ -21,6 +21,7 @@ class Inimigo(pygame.sprite.Sprite):
             self.rect.y += self.velocidade
             tempo = pygame.time.get_ticks() / 4  #Pega o tempo
             x = math.sin(tempo/50.0) * self.escalaSeno + self.posSeno    # scale sine wave
+            print(x)
             self.rect.x = int(x)
  
         #Mantém a nave dentro da tela no eixo X

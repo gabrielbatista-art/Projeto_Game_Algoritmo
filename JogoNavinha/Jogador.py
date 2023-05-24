@@ -56,10 +56,10 @@ class Jogador(pygame.sprite.Sprite): #Cria a classe jogador e suas particularida
                 self.fpsAnim = 0.1
 
             #Mantém a nave dentro da tela no eixo X
-            if self.rect.left < 0:
-                self.rect.left = 0
-            elif self.rect.right > self.tela[0]:
-                self.rect.right = self.tela[0]
+            if self.rect.left < 0 -50:
+                self.rect.left = 0 -50
+            elif self.rect.right > self.tela[0] +50:
+                self.rect.right = self.tela[0] +50
             #Mantém a nave dentro da tela no eixo Y
             if self.rect.top < 0:
                 self.rect.top = 0

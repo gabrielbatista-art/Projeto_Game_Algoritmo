@@ -6,6 +6,8 @@ from Inimigo import Inimigo as enemy #Importa o inimigo como enemy
 from Tiro import Tiro
 # from StartGame import start_screen
 from defscore import desenhar_pontos
+import Gameover as gameover
+import random
 
 def jogoNavinha():
     pygame.init() #Inicializa os módulos do pygame
@@ -35,7 +37,7 @@ def jogoNavinha():
     #Inimigos
     navesInimigos = ["Sprites/Inimigo_Olhao.png", "Sprites/Inimigo_Caveirinha.png"]
     naveInimigo1 = pygame.image.load(navesInimigos[randint(0, 1)]) #Sprite Inimigo
-    velocidadeInimigo = 5
+    velocidadeInimigo = 10
 
     #Tiro
     tiroSprite = pygame.image.load("Sprites/Tiro.png")
@@ -53,15 +55,19 @@ def jogoNavinha():
     #JOGADOR
     jogador = player(naveJogador, velocidade = velocidadePlayer, vida = 3, tela = (larguraTela, alturaTela)) #Instancia o jogador
     todasSprites.add(jogador) #Adiciona o jogador as grupo de todas as sprites
-    
-    #INIMIGOS
-    for c in range(5):
-        naveInimigo1 = pygame.image.load(navesInimigos[randint(0, 1)]) #Sprite Inimigo
-        inimigo = enemy(naveInimigo1, velocidade = velocidadeInimigo, tela = (larguraTela, alturaTela), movimento = randint(0, 1)) #Instancia o inimigo, a gente coloca um for pra instanciar vários dps
-        todasSprites.add(inimigo) #Adiciona o inimigo ao grupo de todas as sprites
-        inimigos.add(inimigo) #Adiciona o inimigo ao grupo dos inimigos p conferir a colisão c o player depois
 
-    # start_screen(imagemFundo, tela)
+    baternoplayer = 3
+
+    #INIMIGOS
+    
+    def spawn():
+        for c in range(5):
+            naveInimigo1 = pygame.image.load(navesInimigos[randint(0, 1)]) #Sprite Inimigo
+            inimigo = enemy(naveInimigo1, velocidade = velocidadeInimigo, tela = (larguraTela, alturaTela), movimento = randint(0, 1)) #Instancia o inimigo, a gente coloca um for pra instanciar vários dps
+            todasSprites.add(inimigo) #Adiciona o inimigo ao grupo de todas as sprites
+            inimigos.add(inimigo) #Adiciona o inimigo ao grupo dos inimigos p conferir a colisão c o player depois                    
+
+
 
     while True:
         Clock.tick(fps) #Define a quantidade de quadros em que o jogo roda
@@ -105,11 +111,17 @@ def jogoNavinha():
         if colisao: #Se retornar true o jogo breka
             inimigos.remove(colisao)
             todasSprites.remove(colisao)
+            baternoplayer -= 1
+            if baternoplayer == 0:
+               return
 
         tela.blit(imagemFundo, (0,0))
         # tela.blit(fogo, (jogador.rect.x + 55, jogador.rect.y + 118))
         todasSprites.draw(tela) #Esse método desenha todas as sprites dentro do grupo "todasSprites" na tela
         desenhar_pontos(pontos, tela)
+
+        if len(inimigos) == 0:
+            spawn()
 
 
         pygame.display.update() #Atualiza a tela do pygame
