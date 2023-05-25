@@ -85,7 +85,7 @@ def start_screen(fundo, logo, start : tuple):
             tela.blit(imagemStart, (rectStart.x, rectStart.y))
 
         tela.blit(imagem_cursor, posicao_mouse) # draw the cursor
-        pygame.draw.rect(tela, (255, 0, 0), (10, 10, 10, 10))
+        
 
        
         # tela.blit(game_over_text, (tela.get_width() // 2 - game_over_text.get_width() // 2,
