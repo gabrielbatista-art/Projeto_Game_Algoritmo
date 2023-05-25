@@ -7,7 +7,6 @@ from Tiro import Tiro
 # from StartGame import start_screen
 from defscore import desenhar_pontos
 import Gameover as gameover
-import random
 
 def jogoNavinha():
     pygame.init() #Inicializa os módulos do pygame
@@ -30,9 +29,14 @@ def jogoNavinha():
     imagemFundo = pygame.image.load("Sprites/Fundo.png")
     imagemFundo = pygame.transform.scale(imagemFundo, (larguraTela, alturaTela)) #Ajusta a imagem de fundo para o tamanho da tela
 
+    #Elementos HUD
+    imagemScore = pygame.image.load("Sprites/Score.png")
+    imagemCoracao = pygame.image.load("Sprites/Coracao.png")
+
     #Player
     naveJogador = pygame.image.load("Sprites/Player/player1.png") #Sprite player
     velocidadePlayer = 10
+    baternoplayer = 3
 
     #Inimigos
     navesInimigos = ["Sprites/Inimigo_Olhao.png", "Sprites/Inimigo_Caveirinha.png"]
@@ -53,10 +57,10 @@ def jogoNavinha():
     lasers = pygame.sprite.Group()
 
     #JOGADOR
-    jogador = player(naveJogador, velocidade = velocidadePlayer, vida = 3, tela = (larguraTela, alturaTela)) #Instancia o jogador
+    jogador = player(naveJogador, velocidade = velocidadePlayer, vida = baternoplayer, tela = (larguraTela, alturaTela)) #Instancia o jogador
     todasSprites.add(jogador) #Adiciona o jogador as grupo de todas as sprites
 
-    baternoplayer = 3
+
 
     #INIMIGOS
     
@@ -81,6 +85,9 @@ def jogoNavinha():
 
         todasSprites.draw(tela)
         todasSprites.update() #Esse método atualiza todos os objetos dentro do grupo
+
+        #Corações
+        
 
         #Verifica o momento em que o tiro foi lançado
         tiroMomento = pygame.time.get_ticks()
@@ -119,6 +126,10 @@ def jogoNavinha():
         # tela.blit(fogo, (jogador.rect.x + 55, jogador.rect.y + 118))
         todasSprites.draw(tela) #Esse método desenha todas as sprites dentro do grupo "todasSprites" na tela
         desenhar_pontos(pontos, tela)
+        tela.blit(imagemScore, (10, 10))
+
+        for c in range(baternoplayer):
+            tela.blit(imagemCoracao, (10 + (c * 40), 60))
 
         if len(inimigos) == 0:
             spawn()
