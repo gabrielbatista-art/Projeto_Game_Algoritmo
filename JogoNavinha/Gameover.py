@@ -11,19 +11,19 @@ def game_over_screen(fundo):
     tela = pygame.display.set_mode((larguraTela, alturaTela)) #Define a janela onde o jogo irá rodar.
     telaRect = tela.get_rect()
     pygame.display.set_caption(utilitarios.tituloGame) #Define o título da janela.
-
     imagemFundo = pygame.image.load(fundo)
 
-
+    
     while True:
-        titulo = "GAME OVER"
-        restart = "<ENTER> para reiniciar"
-        sair = "<X> para sair"
 
-        tituloExibir = font.render(titulo, True, (255, 255, 255))
+
+        #titulo = "GAME OVER"
+        #restart = "<ENTER> para reiniciar"
+        sair = "<X> para sair"
+        tituloExibir = pygame.image.load("Sprites\Gameover\game_over.png")
         rectTitulo = tituloExibir.get_rect()
 
-        restartExibir = font.render(restart, True, (255, 255, 255))
+        restartExibir = pygame.image.load("Sprites\Gameover/restart1.png")
         rectRestart = restartExibir.get_rect()
 
 
@@ -45,10 +45,12 @@ def game_over_screen(fundo):
                     pygame.quit()
                     sys.exit()
 
+     
+
         tela.fill((0, 0, 0))
         tela.blit(imagemFundo, (0,0))
         tela.blit(tituloExibir, (telaRect.centerx - rectTitulo.centerx, telaRect.centery - rectTitulo.centery))
-        tela.blit(restartExibir, (telaRect.centerx - rectRestart.centerx, telaRect.bottom - (rectRestart.bottom * 4)))
+        tela.blit(restartExibir, (110,500))
         tela.blit(sairExibir, (telaRect.centerx - rectExibir.centerx, telaRect.bottom - (rectExibir.bottom * 2)))
         pygame.display.flip()
 
