@@ -13,7 +13,6 @@ def game_over_screen(fundo, over, sair : tuple, restart : tuple):
     tela = pygame.display.set_mode((larguraTela, alturaTela)) #Define a janela onde o jogo irá rodar.
     telaRect = tela.get_rect()
     pygame.display.set_caption(utilitarios.tituloGame) #Define o título da janela.
-
     imagemFundo = pygame.image.load(fundo)
     fundoRect = imagemFundo.get_rect()
 
@@ -38,7 +37,7 @@ def game_over_screen(fundo, over, sair : tuple, restart : tuple):
     imagem_cursor = pygame.image.load("Sprites/Menu/cursor_navinha_export.png")
     imagem_cursor_rect = imagem_cursor.get_rect()
 
-
+    
     while True:
         # titulo = "GAME OVER"
         # restart = "<ENTER> para reiniciar"
@@ -49,7 +48,7 @@ def game_over_screen(fundo, over, sair : tuple, restart : tuple):
 
         # restartExibir = font.render(restart, True, (255, 255, 255))
         # rectRestart = restartExibir.get_rect()
-
+       
 
         # sairExibir = font.render(sair, True, (255, 255, 255))
         # rectExibir = sairExibir.get_rect()
@@ -91,6 +90,8 @@ def game_over_screen(fundo, over, sair : tuple, restart : tuple):
         # tela.blit(sairExibir, (telaRect.centerx - rectExibir.centerx, telaRect.bottom - (rectExibir.bottom * 2)))
         # pygame.display.flip()
 
+     
+
         tela.fill((0, 0, 0))
         tela.blit(imagemFundo, (0, 0))
         tela.blit(imagemGameover, (fundoRect.centerx - rectGameover.centerx, fundoRect.centery - rectGameover.bottom * 0.8))
@@ -108,8 +109,6 @@ def game_over_screen(fundo, over, sair : tuple, restart : tuple):
             tela.blit(imagemExit1, (rectExit.x, rectExit.y))
 
         tela.blit(imagem_cursor, posicao_mouse) # draw the cursor
-
-
 
         pygame.display.flip()
 
