@@ -21,4 +21,4 @@ pontos : int = 0
 while True:
     menu.start_screen(utilitarios.fundoMenu, utilitarios.logoMenu, [utilitarios.startMenu, utilitarios.startMenu2])
     jogoNavinha.jogoNavinha()
-    gameover.game_over_screen(utilitarios.background)
+    gameover.game_over_screen(utilitarios.fundoMenu, utilitarios.gameover,[utilitarios.exit1, utilitarios.exit2] , [utilitarios.restart1, utilitarios.restart2])
