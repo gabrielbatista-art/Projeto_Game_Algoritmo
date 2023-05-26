@@ -10,6 +10,7 @@ import Gameover as gameover
 
 def jogoNavinha():
     pygame.init() #Inicializa os módulos do pygame
+    pygame.mixer.init()
 
     #VARIÁVEIS GERAIS ---------------------------------------------------------------------
     #Tela
@@ -49,7 +50,15 @@ def jogoNavinha():
     cadencia = 200 #É a cadência de tiro em milissegundos
     velocidadeTiro = 15
 
-    fogo = pygame.image.load("Sprites/turbina.gif")
+    #SONS/MUSICA
+    laserSom = pygame.mixer.Sound(utilitarios.laserSom)
+    selectSom = pygame.mixer.Sound(utilitarios.selectSom)
+    clickSom = pygame.mixer.Sound(utilitarios.clickSom)
+    hitSom = pygame.mixer.Sound(utilitarios.hitSom)
+    explosaoSom = pygame.mixer.Sound(utilitarios.explosaoSom)
+
+    # musicaTema = pygame.mixer.music.load(utilitarios.musicaTema)
+    # pygame.mixer.music.play()
 
     #INSTANCIAR ENTIDADES ------------------------------------------------------------------
     todasSprites = pygame.sprite.Group() #Inicia o grupo onde vão todas as sprites
@@ -99,6 +108,7 @@ def jogoNavinha():
             laser.rect.bottom = jogador.rect.top
             todasSprites.add(laser)
             lasers.add(laser)
+            pygame.mixer.Sound.play(laserSom)
             ultimoTiro = tiroMomento
         if tecla[pygame.K_p]:
             break
@@ -110,6 +120,7 @@ def jogoNavinha():
                 if colisaoLaser:
                     lasers.remove(colisaoLaser)
                     todasSprites.remove(colisaoLaser)
+                pygame.mixer.Sound.play(explosaoSom)
                 inimigos.remove(colisaoTiro)
                 todasSprites.remove(colisaoTiro)
                 pontos += 1
@@ -129,7 +140,12 @@ def jogoNavinha():
         tela.blit(imagemScore, (10, 10))
 
         for c in range(baternoplayer):
+            if colisao:
+                tela.fill((255, 255, 255))
+                pygame.mixer.Sound.play(hitSom)
             tela.blit(imagemCoracao, (10 + (c * 40), 60))
+        
+
 
         if len(inimigos) == 0:
             spawn()

@@ -20,3 +20,13 @@ exit2 = "Sprites/Menu/exit2.png"
 
 
 fonte = "8bit.ttf"
+
+#SONS
+laserSom = "Sons/laserShoot.wav"
+selectSom = "Sons/blipSelect.wav"
+clickSom = "Sons/click.wav"
+hitSom = "Sons/hitHurt.wav"
+explosaoSom = "Sons/explosion.wav"
+
+#MUSICAS
+musicaTema = "Sons/Baroes.mp3"
