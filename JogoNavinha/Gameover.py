@@ -32,6 +32,10 @@ def game_over_screen(fundo, over, sair : tuple, restart : tuple):
     rectRestart.x = fundoRect.centerx - rectRestart.centerx
     rectRestart.y = fundoRect.bottom - rectGameover.bottom * 0.85
 
+    select = False
+    select2 = False
+    selectSom = pygame.mixer.Sound(utilitarios.selectSom)
+
     #CURSOR DO MOUSE --------------------
     pygame.mouse.set_visible(False)
     imagem_cursor = pygame.image.load("Sprites/Menu/cursor_navinha_export.png")
@@ -98,14 +102,22 @@ def game_over_screen(fundo, over, sair : tuple, restart : tuple):
         
         colisMenu = pygame.Rect.colliderect(imagem_cursor_rect, rectRestart)
         if colisMenu:
+            if not select:
+                pygame.mixer.Sound.play(selectSom)
+                select = True
             tela.blit(imagemRestart2, (rectRestart.x, rectRestart.y))
         else:
+            select = False
             tela.blit(imagemRestart1, (rectRestart.x, rectRestart.y))
 
-        colisMenu = pygame.Rect.colliderect(imagem_cursor_rect, rectExit)
-        if colisMenu:
+        colisMenu2 = pygame.Rect.colliderect(imagem_cursor_rect, rectExit)
+        if colisMenu2:
+            if not select2:
+                pygame.mixer.Sound.play(selectSom)
+                select2 = True
             tela.blit(imagemExit2, (rectExit.x, rectExit.y))
         else:
+            select2 = False
             tela.blit(imagemExit1, (rectExit.x, rectExit.y))
 
         tela.blit(imagem_cursor, posicao_mouse) # draw the cursor

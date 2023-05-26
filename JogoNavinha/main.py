@@ -18,6 +18,10 @@ fps = 60 #Define a quantidade de quadros por segundo que o jogo roda
 
 pontos : int = 0
 
+musicaTema = pygame.mixer.music.load(utilitarios.musicaTema)
+# pygame.mixer.music.play()
+pygame.mixer.music.set_volume(0.5)
+
 while True:
     menu.start_screen(utilitarios.fundoMenu, utilitarios.logoMenu, [utilitarios.startMenu, utilitarios.startMenu2])
     jogoNavinha.jogoNavinha()

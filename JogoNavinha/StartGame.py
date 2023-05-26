@@ -20,7 +20,11 @@ def start_screen(fundo, logo, start : tuple):
     rectStart = imagemStart.get_rect()
     rectStart.x = fundoRect.centerx - rectStart.centerx
     rectStart.y = fundoRect.bottom - rectLogo.bottom * 0.87
-   
+    
+    select = False
+    selectSom = pygame.mixer.Sound(utilitarios.selectSom)
+
+
     
     font = pygame.font.SysFont("arial", 40, True, False)
     # game_over_text = font.render("NAVINHA", True, (255, 255, 255))
@@ -39,7 +43,6 @@ def start_screen(fundo, logo, start : tuple):
     
 
     while True:
-
         imagem_cursor_rect = imagem_cursor.get_rect() #retangulo do mouse
         posicao_mouse = pygame.mouse.get_pos()  # update position
 
@@ -80,12 +83,19 @@ def start_screen(fundo, logo, start : tuple):
         
         colisMenu = pygame.Rect.colliderect(imagem_cursor_rect, rectStart)
         if colisMenu:
+            if not select:
+                pygame.mixer.Sound.play(selectSom)
+                select = True
             tela.blit(imagemStart2, (rectStart.x, rectStart.y))
         else:
             tela.blit(imagemStart, (rectStart.x, rectStart.y))
+            select = False
 
         tela.blit(imagem_cursor, posicao_mouse) # draw the cursor
         
+        # if select == True and tocando == True:
+        #     pygame.mixer.Sound.play(selectSom)
+        #     tocando = False
 
        
         # tela.blit(game_over_text, (tela.get_width() // 2 - game_over_text.get_width() // 2,
