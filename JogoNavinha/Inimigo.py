@@ -1,5 +1,10 @@
 from random import randint
 import pygame, math
+import Navinha
+import utilitarios
+
+#Tela
+larguraTela, alturaTela = utilitarios.resolucaoX, utilitarios.resolucaoY #Define a resolução do jogo
 
 class Inimigo(pygame.sprite.Sprite):
     def __init__(self, naveInimigoSprite, velocidade : int, tela : tuple, movimento : int):
@@ -15,6 +20,7 @@ class Inimigo(pygame.sprite.Sprite):
         self.escalaSeno = randint(30, 100)
 
     def update(self):
+        
         if self.movimento == 0:
             self.rect.y += self.velocidade #A nave só se move p baixo
         elif self.movimento == 1:
@@ -34,4 +40,8 @@ class Inimigo(pygame.sprite.Sprite):
         #     self.rect.top = 0
         # elif self.rect.bottom > self.tela[1] + 50:
         #     self.rect.bottom = self.tela[1] + 50
-       
+        
+        # Se o inimigo passar da parte de baixo da tela, morre.
+        if self.rect.top > alturaTela + 10:
+            self.kill()
+        

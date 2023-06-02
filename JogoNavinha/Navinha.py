@@ -6,9 +6,11 @@ from Inimigo import Inimigo as enemy #Importa o inimigo como enemy
 from Tiro import Tiro
 # from StartGame import start_screen
 from defscore import desenhar_pontos
+import Gameover as gameover
 
 def jogoNavinha():
     pygame.init() #Inicializa os módulos do pygame
+    pygame.mixer.init()
 
     #VARIÁVEIS GERAIS ---------------------------------------------------------------------
     #Tela
@@ -28,14 +30,19 @@ def jogoNavinha():
     imagemFundo = pygame.image.load("Sprites/Fundo.png")
     imagemFundo = pygame.transform.scale(imagemFundo, (larguraTela, alturaTela)) #Ajusta a imagem de fundo para o tamanho da tela
 
+    #Elementos HUD
+    imagemScore = pygame.image.load("Sprites/Score.png")
+    imagemCoracao = pygame.image.load("Sprites/Coracao.png")
+
     #Player
     naveJogador = pygame.image.load("Sprites/Player/player1.png") #Sprite player
     velocidadePlayer = 10
+    baternoplayer = 3
 
     #Inimigos
     navesInimigos = ["Sprites/Inimigo_Olhao.png", "Sprites/Inimigo_Caveirinha.png"]
     naveInimigo1 = pygame.image.load(navesInimigos[randint(0, 1)]) #Sprite Inimigo
-    velocidadeInimigo = 5
+    velocidadeInimigo = 10
 
     #Tiro
     tiroSprite = pygame.image.load("Sprites/Tiro.png")
@@ -43,7 +50,15 @@ def jogoNavinha():
     cadencia = 200 #É a cadência de tiro em milissegundos
     velocidadeTiro = 15
 
-    fogo = pygame.image.load("Sprites/turbina.gif")
+    #SONS/MUSICA
+    laserSom = pygame.mixer.Sound(utilitarios.laserSom)
+    selectSom = pygame.mixer.Sound(utilitarios.selectSom)
+    clickSom = pygame.mixer.Sound(utilitarios.clickSom)
+    hitSom = pygame.mixer.Sound(utilitarios.hitSom)
+    explosaoSom = pygame.mixer.Sound(utilitarios.explosaoSom)
+
+    # musicaTema = pygame.mixer.music.load(utilitarios.musicaTema)
+    # pygame.mixer.music.play()
 
     #INSTANCIAR ENTIDADES ------------------------------------------------------------------
     todasSprites = pygame.sprite.Group() #Inicia o grupo onde vão todas as sprites
@@ -51,17 +66,21 @@ def jogoNavinha():
     lasers = pygame.sprite.Group()
 
     #JOGADOR
-    jogador = player(naveJogador, velocidade = velocidadePlayer, vida = 3, tela = (larguraTela, alturaTela)) #Instancia o jogador
+    jogador = player(naveJogador, velocidade = velocidadePlayer, vida = baternoplayer, tela = (larguraTela, alturaTela)) #Instancia o jogador
     todasSprites.add(jogador) #Adiciona o jogador as grupo de todas as sprites
-    
-    #INIMIGOS
-    for c in range(5):
-        naveInimigo1 = pygame.image.load(navesInimigos[randint(0, 1)]) #Sprite Inimigo
-        inimigo = enemy(naveInimigo1, velocidade = velocidadeInimigo, tela = (larguraTela, alturaTela)) #Instancia o inimigo, a gente coloca um for pra instanciar vários dps
-        todasSprites.add(inimigo) #Adiciona o inimigo ao grupo de todas as sprites
-        inimigos.add(inimigo) #Adiciona o inimigo ao grupo dos inimigos p conferir a colisão c o player depois
 
-    # start_screen(imagemFundo, tela)
+
+
+    #INIMIGOS
+    
+    def spawn():
+        for c in range(5):
+            naveInimigo1 = pygame.image.load(navesInimigos[randint(0, 1)]) #Sprite Inimigo
+            inimigo = enemy(naveInimigo1, velocidade = velocidadeInimigo, tela = (larguraTela, alturaTela), movimento = randint(0, 1)) #Instancia o inimigo, a gente coloca um for pra instanciar vários dps
+            todasSprites.add(inimigo) #Adiciona o inimigo ao grupo de todas as sprites
+            inimigos.add(inimigo) #Adiciona o inimigo ao grupo dos inimigos p conferir a colisão c o player depois                    
+
+
 
     while True:
         Clock.tick(fps) #Define a quantidade de quadros em que o jogo roda
@@ -76,6 +95,9 @@ def jogoNavinha():
         todasSprites.draw(tela)
         todasSprites.update() #Esse método atualiza todos os objetos dentro do grupo
 
+        #Corações
+        
+
         #Verifica o momento em que o tiro foi lançado
         tiroMomento = pygame.time.get_ticks()
 
@@ -86,6 +108,7 @@ def jogoNavinha():
             laser.rect.bottom = jogador.rect.top
             todasSprites.add(laser)
             lasers.add(laser)
+            pygame.mixer.Sound.play(laserSom)
             ultimoTiro = tiroMomento
         if tecla[pygame.K_p]:
             break
@@ -93,22 +116,39 @@ def jogoNavinha():
         colisaoTiro = pygame.sprite.groupcollide(inimigos, lasers, False, False)
         colisaoLaser = pygame.sprite.groupcollide(lasers, inimigos, False, False)
         if colisaoTiro:
-            if colisaoLaser:
-                lasers.remove(colisaoLaser)
-                todasSprites.remove(colisaoLaser)
-            inimigos.remove(colisaoTiro)
-            todasSprites.remove(colisaoTiro)
-            pontos += 1
+            for colisao in colisaoTiro:
+                if colisaoLaser:
+                    lasers.remove(colisaoLaser)
+                    todasSprites.remove(colisaoLaser)
+                pygame.mixer.Sound.play(explosaoSom)
+                inimigos.remove(colisaoTiro)
+                todasSprites.remove(colisaoTiro)
+                pontos += 1
 
         colisao = pygame.sprite.spritecollide(jogador, inimigos, False) #Confere se há colisão entre o player e os inimigos e retorna True ou False
         if colisao: #Se retornar true o jogo breka
             inimigos.remove(colisao)
             todasSprites.remove(colisao)
+            baternoplayer -= 1
+            if baternoplayer == 0:
+               return
 
         tela.blit(imagemFundo, (0,0))
         # tela.blit(fogo, (jogador.rect.x + 55, jogador.rect.y + 118))
         todasSprites.draw(tela) #Esse método desenha todas as sprites dentro do grupo "todasSprites" na tela
         desenhar_pontos(pontos, tela)
+        tela.blit(imagemScore, (10, 10))
+
+        for c in range(baternoplayer):
+            if colisao:
+                tela.fill((255, 255, 255))
+                pygame.mixer.Sound.play(hitSom)
+            tela.blit(imagemCoracao, (10 + (c * 40), 60))
+        
 
 
+        if len(inimigos) == 0:
+            spawn()
+
+                
         pygame.display.update() #Atualiza a tela do pygame
