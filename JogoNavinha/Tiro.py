@@ -1,4 +1,9 @@
 import pygame
+import Navinha
+import utilitarios
+
+#Tela
+larguraTela, alturaTela = utilitarios.resolucaoX, utilitarios.resolucaoY #Define a resolução do jogo
 
 class Tiro(pygame.sprite.Sprite):
     def __init__(self, balaSprite, velocidade : int, forca : int, tela:tuple):
@@ -11,3 +16,7 @@ class Tiro(pygame.sprite.Sprite):
     
     def update(self):
         self.rect.y -= self.velocidade
+
+        if self.rect.top > alturaTela:
+            self.kill()
+            
